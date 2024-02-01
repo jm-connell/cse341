@@ -48,7 +48,7 @@ router.get("/contacts", async (req, res) => {
     res.json(contactsArray);
   } catch (err) {
     console.error(err);
-    res.status(500).json({ message: "Error connecting to database" });
+    res.status(500).json({ message: `Error: ${err.message}` });
   } finally {
     await client.close();
   }
@@ -76,9 +76,9 @@ router.get("/contacts/:id", async (req, res) => {
     res.json(contact);
   } catch (err) {
     console.error(err);
-    res.status(500).json({
-      message: `Error connecting to database`,
-    });
+    res
+      .status(500)
+      .json(res.status(500).json({ message: `Error: ${err.message}` }));
   } finally {
     await client.close();
   }
